@@ -1,2 +1,0 @@
-Target dependency graph (1 target)
-Target 'Solid' in project 'Solid' (no dependencies)
