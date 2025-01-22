@@ -101,3 +101,46 @@ export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:path/to/SolidEngine/lib
 ./examples/SolidEngineExample
 
 ```
+
+
+## Update the library
+1. Add function to `.hpp` and `.cpp` file
+```cpp
+// SolidEngine.hpp
+#pragma once
+
+namespace SolidEngine {
+	void StartEngine();
+	void EndEngine(); // added
+}
+
+// SolidEngine.cpp
+// other stuff...
+void EndEngine() {
+    std::cout << "End Engine!" << std::endl;
+}
+
+// Use it in the examples/main.cpp
+#include "SolidEngine.hpp"
+
+int main() {
+	SolidEngine::StartEngine();
+	SolidEngine::EndEngine();
+	return 0;
+}
+```
+
+2. Build the `.sh` file
+```
+chmod +x build_library.sh
+```
+
+3. Run the script to build your library
+```
+./build_library.sh
+```
+
+4. Run the example
+```
+./build/examples/SolidEngineExample
+```

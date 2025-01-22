@@ -2,5 +2,6 @@
 
 namespace SolidEngine {
 	void StartEngine();
+	void EndEngine();
 }
 
