@@ -1,0 +1,34 @@
+# Build artifacts
+*.o
+*.obj
+*.exe
+/build/
+/bin/
+/out/
+*.tmp
+*.temp
+*.gch
+*.pch
+
+# IDE files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+.idea/
+
+# OS File
+.DS_Store
+Thumbs.db
+
+# Project-specific
+/lib/
+/Intermediate/
+/Saved/
+
+# Other
+*.log
+*.pdb
+*.idb
+*.cache
