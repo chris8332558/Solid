@@ -1,7 +1,7 @@
 # DevLog
 
 ## 2024.1.22
-git: 
+git: 76fd36297912db4b45574fe742e9025c0f85939c
 
 ## Separate SolidEngine library and Application
 ```
