@@ -1,15 +1,9 @@
-cmake_minimum_required(VERSION 3.10)
-project(SolidEngine VERSION 1.0)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
-# Create the shared library from "src/SolidEngine.cpp"
+# Create the shared library target named 'SolidEngine' from "src/SolidEngine.cpp"
 add_library(SolidEngine SHARED
 	src/SolidEngine.cpp
 )
 
-# Set include directories for .hpp files
+# Set include directories for the library
 target_include_directories(SolidEngine PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
@@ -31,9 +25,4 @@ install(FILES include/SolideEngine.hpp DESTINATION include)
 # Add examples subdirectory if it exists the CMakeLists.txt in examples folder
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/examples/CMakeLists.txt)
     add_subdirectory(examples)
-endif()
-
-# Add tests subdirectory if it exists the CMakeLists.txt in tests folder
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/CMakeLists.txt)
-    add_subdirectory(tests)
 endif()

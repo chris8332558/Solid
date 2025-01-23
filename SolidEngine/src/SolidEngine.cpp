@@ -3,7 +3,7 @@
 
 namespace SolidEngine {
 	void StartEngine() {
-		std::cout << "Start Engine!" << std::endl;
+		std::cout << "New Start Engine!" << std::endl;
 	}
 
 	void EndEngine() {

@@ -1,4 +1,32 @@
-# Solid
+# DevLog
+
+## 2024.1.22
+git: 
+
+## Separate SolidEngine library and Application
+```
+SolidEngineProject/
+├── SolidEngine/
+│ ├── src/
+│ │ └── SolidEngine.cpp
+│ ├── include/
+│ │ └── SolidEngine.hpp
+│ ├── lib/
+│ │ └── libSolidENgine.dylib
+│ └── CMakeLists.txt
+├── Sandbox/
+│ ├── src/
+│ │ └── Application.cpp
+│ └── CMakeLists.txt
+└── CMakeLists.txt
+```
+Separated the library and the application, used CMakeLists.txt files to handle building and linking.
+
+
+## 2024.1.21 
+git: 854118e4b7394c6c86602363130ac13a27f1cb61
+
+## Tried to build SolidEngine shared library, and able to create SolidEngine.dylib and used it in `examples/main.cpp`
 
 ## CMakeLists.txt file does the following:
 1. Sets up the project and requires C++17.
@@ -103,43 +131,44 @@ export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:path/to/SolidEngine/lib
 ```
 
 
-## To update the library:
+## Update the library
+1. Add function to `.hpp` and `.cpp` file
+```cpp
+// SolidEngine.hpp
+#pragma once
 
-1. Make changes to your SolidEngine library:
-- Update source files in Solid/src/
-- Modify or add header files in Solid/include/
-- If you're adding new files, make sure to include them in Solid/CMakeLists.txt
+namespace SolidEngine {
+	void StartEngine();
+	void EndEngine(); // added
+}
 
-2. Rebuild the project
-This will rebuild the SolidEngine library with your change
+// SolidEngine.cpp
+// other stuff...
+void EndEngine() {
+    std::cout << "End Engine!" << std::endl;
+}
+
+// Use it in the examples/main.cpp
+#include "SolidEngine.hpp"
+
+int main() {
+	SolidEngine::StartEngine();
+	SolidEngine::EndEngine();
+	return 0;
+}
 ```
-./build.sh
+
+2. Build the `.sh` file
+```
+chmod +x build_library.sh
 ```
 
-3. Update Sandbox if necessary
-- If you've changed the SolidEngine API, update Sandbox/src/Application.cpp accordingly
-- Rebuild the project as in step 2
+3. Run the script to build your library
+```
+./build_library.sh
+```
 
-This process allows you to:
-- Incrementally update your library
-- Automatically propagate changes to dependent projects (like Sandbox)
-- Maintain a clean separation between your library and applications using it
-
-Remember to:
-1. Use version control (like Git) to track changes
-2. Update your library's version number if making significant changes
-3. Keep your API documentation up-to-date
-
-
-## Q&A
-- Q: If I only changed my `Application.cpp`, do I need to run the `build.sh` file?
-- A: Yes, if you make changes to your Application.cpp file, you should run the build.sh script again to recompile your project. Here's why:
-    1. Incremental builds: CMake and make are designed to handle incremental builds efficiently. When you run build.sh after modifying Application.cpp:
-        -  CMake will detect the changes in your source files.
-        - Only the modified files and their dependencies will be recompiled.
-        - The linking process will be redone to create the updated executable.
-    2. Consistency: Running build.sh ensures that your entire project is in a consistent state, with all dependencies properly updated.
-    3. Simplicity: The build script automates the entire build process, so you don't have to remember specific CMake commands or worry about being in the correct directory.
-    4. Error detection: If your changes introduced any errors or broke any dependencies, running the full build script will catch these issues early.
-
-    While it's possible to manually recompile just the Sandbox target if you're certain only Application.cpp has changed, using build.sh is generally safer and ensures everything is up to date. The incremental build system will minimize unnecessary recompilation, so the process should be relatively quick for small changes.
+4. Run the example
+```
+./build/examples/SolidEngineExample
+```
