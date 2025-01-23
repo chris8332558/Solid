@@ -32,3 +32,5 @@ Thumbs.db
 *.pdb
 *.idb
 *.cache
+
+./Solid/
