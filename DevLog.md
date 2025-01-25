@@ -1,7 +1,7 @@
 # DevLog
 
 ## 2024.1.25
-git:
+git: 0343f886119ef2d7676e7d2c7be41dfc05ec140d
 
 ## Setup Entry Point in SolidEngine
 > Note: An empty while loop might cause `Trace/BPT trap: 5` error
