@@ -1,5 +1,5 @@
-# Create an executable target anmed Snadbox and specified the source file for it
-add_executable(Sandbox src/Application.cpp)
+# Create an executable target named Snadbox and specified the source file for it
+add_executable(Sandbox src/SandboxApp.cpp)
 
 # Links the Sandbox executable with the SolidEngine library
 target_link_libraries(Sandbox PRIVATE SolidEngine)
@@ -7,5 +7,5 @@ target_link_libraries(Sandbox PRIVATE SolidEngine)
 
 # Adds the SolidEngine include directory to the Sandbox target
 target_include_directories(Sandbox PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/../Solid/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../SolidEngine/include
 )

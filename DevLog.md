@@ -1,5 +1,44 @@
 # DevLog
 
+## 2024.1.25
+git:
+
+## Setup Entry Point in SolidEngine
+> Note: An empty while loop might cause `Trace/BPT trap: 5` error
+
+Setup Entry Point in SolidEngine and create Application.cpp and let SandboxApp define 
+the definition of `SolidEngine::CreateApplication()`, which returns `SandBox`.
+`SolidEninge.hpp`: include all the files, so client only need to include this `SolidEngine.hpp`
+```
+SolidEngineProject/
+├── SolidEngine/
+│ ├── src/
+│ │ └── Application.cpp
+│ ├── include/
+│ │ └── Application.hpp
+│ │ └── EntryPoint.hpp
+│ │ └── SolidEngine.hpp
+│ ├── lib/
+│ │ └── libSolidENgine.dylib
+│ └── CMakeLists.txt
+├── Sandbox/
+│ ├── src/
+│ │ └── SandboxApp.cpp
+│ └── CMakeLists.txt
+└── CMakeLists.txt
+```
+
+`build.sh`
+The command cmake `--build . --config $BUILD_TYPE -- -j$(sysctl -n hw.logicalcpu)` is used to build a CMake project. Let's break it down:
+1. `cmake --build .`: This tells CMake to build the project in the current directory.
+2. `--config $BUILD_TYPE`: This specifies the build configuration (e.g., Release or Debug) as defined in the $BUILD_TYPE variable.
+3. `--`: This separates CMake options from options that should be passed to the underlying build tool (like Make or Ninja).
+4. `-j$(sysctl -n hw.logicalcpu)`: This is passed to the underlying build tool:
+    - `-j` enables parallel builds
+    - `$(sysctl -n hw.logicalcpu)` is a command substitution that gets the number of logical CPUs on macOS
+The $(sysctl -n hw.logicalcpu) part queries the system for the number of logical CPU cores available. This allows the build process to utilize all available cores, potentially speeding up the compilation significantly.
+
+
 ## 2024.1.22
 git: 76fd36297912db4b45574fe742e9025c0f85939c
 

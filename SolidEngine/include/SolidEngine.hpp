@@ -1,7 +1,6 @@
 #pragma once
 
-namespace SolidEngine {
-	void StartEngine();
-	void EndEngine();
-}
+// For client to include, client should only include this .hpp file
+#include "Application.hpp"
 
+#include "EntryPoint.hpp"

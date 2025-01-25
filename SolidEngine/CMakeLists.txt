@@ -1,6 +1,6 @@
 # Create the shared library target named 'SolidEngine' from "src/SolidEngine.cpp"
 add_library(SolidEngine SHARED
-	src/SolidEngine.cpp
+	src/Application.cpp
 )
 
 # Set include directories for the library
@@ -21,8 +21,3 @@ install(TARGETS SolidEngine
 )
 
 install(FILES include/SolideEngine.hpp DESTINATION include)
-
-# Add examples subdirectory if it exists the CMakeLists.txt in examples folder
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/examples/CMakeLists.txt)
-    add_subdirectory(examples)
-endif()

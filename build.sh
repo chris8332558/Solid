@@ -21,7 +21,7 @@ cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ..
 
 # Build the project
 print_message "Building the project"
-cmake --build . --config $BUILD_TYPE -- -j$(nproc)
+cmake --build . --config $BUILD_TYPE -- -j$(sysctl -n hw.logicalcpu)
 
 # Return to the original directory
 cd $PROJECT_ROOT || exit
