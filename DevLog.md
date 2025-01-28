@@ -2,7 +2,7 @@
 
 
 ## 2024.1.27
-git: 
+git: 207eb6861ba3e1abcdd2b1199731cdec142a0a45
 
 ## Logging
 Adding logging system with the exist project, we use it as a git submodule.
