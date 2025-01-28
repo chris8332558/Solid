@@ -1,5 +1,140 @@
 # DevLog
 
+
+## 2024.1.27
+git: 
+
+## Logging
+Adding logging system with the exist project, we use it as a git submodule.
+
+[spdlog](https://github.com/gabime/spdlog?tab=readme-ov-file)
+
+1. Add the repo as a submodule
+```
+git submodule add https://github.com/gabime/spdlog.git SolidEngine/thirdparty/spdlog
+```
+This will create a `.gitmodules` file.
+
+2. Add the include directory to the CMakeLists.txt
+```cmake
+## SolidEngine/CMakeLists.txt
+# Create the shared library target named 'SolidEngine' from "src/SolidEngine.cpp"
+add_library(SolidEngine SHARED
+	src/Application.cpp
+	src/Log.cpp
+)
+
+# Set include directories for the library
+target_include_directories(SolidEngine PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> # Used when building the project
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/spdlog/include> # Used when building the project
+    $<INSTALL_INTERFACE:include> # Used when the library is installed
+)
+
+###
+## Sandbox/CMakeLists.txt
+# Adds the SolidEngine include directory to the Sandbox target
+target_include_directories(Sandbox PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/../SolidEngine/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../SolidEngine/thirdparty/spdlog/include
+)
+```
+
+3. Create `Log.hpp` and `Log.cpp`
+```cpp
+// Log.hpp
+#pragma once
+
+#include <memory>
+#include "spdlog/spdlog.h"
+
+namespace SolidEngine {
+
+    class Log 
+    {
+        public:
+        static void Init();
+        inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
+        inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
+
+        private:
+        static std::shared_ptr<spdlog::logger> s_CoreLogger;
+        static std::shared_ptr<spdlog::logger> s_ClientLogger;
+    };
+}
+
+// Log.cpp
+#include "Log.hpp"
+#include "spdlog/sinks/stdout_color_sinks.h"
+
+namespace SolidEngine {
+
+    std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
+    std::shared_ptr<spdlog::logger> Log::s_ClientLogger;
+
+    void Log::Init()
+    {
+        // change log pattern
+        spdlog::set_pattern("%^[%T] %n: %v %$");
+        // create a color multi-threaded logger
+        s_CoreLogger = spdlog::stdout_color_mt("SOLIDENGINE");
+        s_CoreLogger->set_level(spdlog::level::trace);
+        s_ClientLogger = spdlog::stdout_color_mt("APP");
+        s_ClientLogger->set_level(spdlog::level::trace);
+    }
+}
+
+```
+
+4. Include `Log.hpp` in `SolidEngine.hpp`
+```cpp
+// For client to include, client should only include this .hpp file
+#include "Application.hpp"
+#include "Log.hpp"
+```
+
+5. Use it in `EntryPoint.hpp` for test
+```cpp
+int main(int argc, char **argv)
+{
+    SolidEngine::Log::Init();   
+    SolidEngine::Log::GetCoreLogger()->warn("Initialized Log!");
+    SolidEngine::Log::GetClientLogger()->info("Hello!");
+    //...
+}
+```
+
+6. Define macros for easy use
+```cpp
+// Log.hpp (outside namespace)
+// Core log macros
+#define SOLID_CORE_TRACE(...) SolidEngine::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define SOLID_CORE_INFO(...)  SolidEngine::Log::GetCoreLogger()->info(__VA_ARGS__)
+#define SOLID_CORE_WARN(...)  SolidEngine::Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define SOLID_CORE_ERROR(...) SolidEngine::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define SOLID_CORE_FATAL(...) SolidEngine::Log::GetCoreLogger()->critical(__VA_ARGS__)
+
+// Client log macros
+#define SOLID_TRACE(...) SolidEngine::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define SOLID_INFO(...)  SolidEngine::Log::GetClientLogger()->info(__VA_ARGS__)
+#define SOLID_WARN(...)  SolidEngine::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define SOLID_ERROR(...) SolidEngine::Log::GetClientLogger()->error(__VA_ARGS__)
+#define SOLID_FATAL(...) SolidEngine::Log::GetClientLogger()->critical(__VA_ARGS__)
+
+// EntryPoint.hpp
+SOLID_CORE_WARN("Initialized Log!");
+SOLID_INFO("Hello!");
+```
+The advantage of macros is that we can define it to do nothing in distribute build. e.g. `#define SOLID_FATAL(...)`
+
+
+7. Build and run
+```
+./build.sh
+./run.sh
+```
+
+
 ## 2024.1.25
 git: 0343f886119ef2d7676e7d2c7be41dfc05ec140d
 
