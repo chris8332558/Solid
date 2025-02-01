@@ -8,5 +8,6 @@ target_link_libraries(Sandbox PRIVATE SolidEngine)
 # Adds the SolidEngine include directory to the Sandbox target
 target_include_directories(Sandbox PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../SolidEngine/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../SolidEngine/include/Events
     ${CMAKE_CURRENT_SOURCE_DIR}/../SolidEngine/thirdparty/spdlog/include
 )

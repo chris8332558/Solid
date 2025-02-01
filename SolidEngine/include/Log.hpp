@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "spdlog/spdlog.h"
+#include "spdlog/fmt/ostr.h" // For class that returns std::string
 
 namespace SolidEngine {
 

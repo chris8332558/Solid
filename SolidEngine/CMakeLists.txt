@@ -8,6 +8,7 @@ add_library(SolidEngine SHARED
 target_include_directories(SolidEngine PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> # Used when building the project
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/spdlog/include> # Used when building the project
+    # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Events> # Used when building the project
     $<INSTALL_INTERFACE:include> # Used when the library is installed
 )
 

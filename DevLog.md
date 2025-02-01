@@ -1,7 +1,18 @@
 # DevLog
 
+## 2025.1.31
+git:
 
-## 2024.1.27
+## Event System
+An `Event` just contains the info of what is its type and what its categories are. And some Event have data like `KeyCode` for `KeyPressedEvent` or `MouseX` and `MouseY` for `MouseMovedEvent`.
+
+Create a `Event` class as a base class, and have `KeyEvent`, `ApplicationEvent`, `MouseEvent` to derive it.
+
+Create a `EventDispatcher` class to dispatch the event to different layer of the systems, and the systems will decide if they'll handle the event or not depend on the event's type or catrgory.
+
+An Event can have only a EventType, but it can be in multiple categories, e.g. `KeyPressedEvent` is a `KeyPresse` type, and it's in `EventCategoryInput` and `EventCategoryKeyBoard`.
+
+## 2025.1.27
 git: 207eb6861ba3e1abcdd2b1199731cdec142a0a45
 
 ## Logging
@@ -174,7 +185,7 @@ The command cmake `--build . --config $BUILD_TYPE -- -j$(sysctl -n hw.logicalcpu
 The $(sysctl -n hw.logicalcpu) part queries the system for the number of logical CPU cores available. This allows the build process to utilize all available cores, potentially speeding up the compilation significantly.
 
 
-## 2024.1.22
+## 2025.1.22
 git: 76fd36297912db4b45574fe742e9025c0f85939c
 
 ## Separate SolidEngine library and Application
