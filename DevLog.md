@@ -1,7 +1,7 @@
 # DevLog
 
 ## 2025.2.1
-git:
+git: 1ef6146e346f3b7ec2f449336f793abe436bc228
 
 ## Pre-compiled header, pch
 Pre-Compiled header make the compiler to produce a binery file of those specified header files at the first time build, and makes the build time faster in future build. Usually we put the header files that won't be changed like `iostream`, `memory`, `vector`, etc.
