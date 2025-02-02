@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include "sepch.hpp"
 
 #define BIT(x) (1 << x)
 namespace SolidEngine

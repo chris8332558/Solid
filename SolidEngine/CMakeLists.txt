@@ -4,6 +4,8 @@ add_library(SolidEngine SHARED
 	src/Log.cpp
 )
 
+target_precompile_headers(SolidEngine PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/sepch.hpp)
+
 # Set include directories for the library
 target_include_directories(SolidEngine PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> # Used when building the project
@@ -11,6 +13,7 @@ target_include_directories(SolidEngine PUBLIC
     # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Events> # Used when building the project
     $<INSTALL_INTERFACE:include> # Used when the library is installed
 )
+
 
 # Set output directory for the library
 set_target_properties(SolidEngine PROPERTIES

@@ -1,7 +1,7 @@
 #pragma once
 
+#include "sepch.hpp"
 #include "Event.hpp"
-#include <sstream>
 
 namespace SolidEngine {
 
